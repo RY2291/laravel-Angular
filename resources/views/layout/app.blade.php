@@ -1,9 +1,9 @@
 <!doctype html>
 <html ng-app="myApp">
 <head>
-    <title>AngularJS Sample</title>
+    <title>@yield('title')</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
+    {{-- {{ }}がbladeとangularで競合するため、$interpolateProviderでデリミタを変更する --}}
     <script>
         var app = angular.module('myApp', []);
         app.config(function($interpolateProvider) {
@@ -11,11 +11,9 @@
             $interpolateProvider.endSymbol(']]');
         });
     </script>
+    @yield('head')
 </head>
-<body>
-    <div>
-        <p>input:<input type="text" ng-model="msg"></p>
-        <p>you typed: [[msg]].</p>
-    </div>
+<body ng-init="@yield('ngInit')" ng-app="@yield('ngApp')">
+    @yield('content')
 </body>
 </html>
